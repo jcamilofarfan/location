@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateLocationChildDto } from '../dtos/locationChild.dtos';
 import { ChildService } from '../services/child.service';
@@ -16,7 +23,7 @@ export class ChildController {
 
   @Get('/:id')
   @ApiOperation({ summary: 'Get child Location by id' })
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.childService.findOne(id);
   }
 

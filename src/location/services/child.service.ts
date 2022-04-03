@@ -17,8 +17,8 @@ export class ChildService {
     return this.childRepo.find();
   }
 
-  findOne(id: number) {
-    const lChild = this.childRepo.findOne({
+  async findOne(id: number) {
+    const lChild = await this.childRepo.findOne({
       relations: ['locationParent'],
       where: { id },
     });

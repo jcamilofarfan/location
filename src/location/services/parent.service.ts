@@ -17,8 +17,8 @@ export class ParentService {
     });
   }
 
-  findOne(id: number) {
-    const lParent = this.parentRepo.findOne({
+  async findOne(id: number) {
+    const lParent = await this.parentRepo.findOne({
       relations: ['locationChildren'],
       where: { id },
     });
@@ -28,8 +28,8 @@ export class ParentService {
     return lParent;
   }
 
-  findOneWithOutChildren(id: number) {
-    const lParent = this.parentRepo.findOne({
+  async findOneWithOutChildren(id: number) {
+    const lParent = await this.parentRepo.findOne({
       where: { id },
     });
     if (!lParent) {
