@@ -14,9 +14,7 @@ export class ChildService {
   ) {}
 
   findAll() {
-    return this.childRepo.find({
-      relations: ['locationParent'],
-    });
+    return this.childRepo.find();
   }
 
   findOne(id: number) {

@@ -12,12 +12,14 @@ export class ParentService {
   ) {}
 
   findAll() {
-    return this.parentRepo.find();
+    return this.parentRepo.find({
+      relations: ['locationChildren'],
+    });
   }
 
   findOne(id: number) {
     const lParent = this.parentRepo.findOne({
-      relations: ['locationChilds'],
+      relations: ['locationChildren'],
       where: { id },
     });
     if (!lParent) {
