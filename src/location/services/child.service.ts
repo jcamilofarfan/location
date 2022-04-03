@@ -31,7 +31,9 @@ export class ChildService {
   async create(data: CreateLocationChildDto) {
     const newChild = this.childRepo.create(data);
     if (data.parentId) {
-      const parent = await this.parentService.findOne(data.parentId);
+      const parent = await this.parentService.findOneWithOutChildren(
+        data.parentId,
+      );
       newChild.locationParent = parent;
     }
     return this.childRepo.save(newChild);

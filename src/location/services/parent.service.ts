@@ -28,6 +28,16 @@ export class ParentService {
     return lParent;
   }
 
+  findOneWithOutChildren(id: number) {
+    const lParent = this.parentRepo.findOne({
+      where: { id },
+    });
+    if (!lParent) {
+      throw new NotFoundException(`Location Parent with id ${id} not found`);
+    }
+    return lParent;
+  }
+
   create(data: CreateLocationParentDto) {
     const newParent = this.parentRepo.create(data);
     return this.parentRepo.save(newParent);
