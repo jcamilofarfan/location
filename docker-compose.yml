@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  postgresnestjs:
+  dbpostgres:
     image: postgres:13
     environment:
      - POSTGRES_DB=my_db
@@ -12,3 +12,34 @@ services:
       - '5434:5432'
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - POSTGRES_DB=my_db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_HOST=dbpostgres
+      - POSTGRES_PORT=5432
+      - PORT=80
+      - TYPEORM_CONNECTION = postgres
+      - TYPEORM_HOST = localhost
+      - TYPEORM_USERNAME = root
+      - TYPEORM_PASSWORD = 123456
+      - TYPEORM_DATABASE = my_db
+      - TYPEORM_PORT = 5432
+      - TYPEORM_SYNCHRONIZE = false
+      - TYPEORM_LOGGING = true
+      - TYPEORM_ENTITIES = src/**/*.entity.ts
+      - TYPEORM_MIGRATIONS = src/database/migrations/*.ts
+      - TYPEORM_MIGRATIONS_DIR = src/database/migrations
+      - TYPEORM_MIGRATIONS_TABLE_NAME = migrations
+    ports:
+      - '8080:80'
+    depends_on:
+      - dbpostgres
+
