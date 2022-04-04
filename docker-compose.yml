@@ -42,5 +42,6 @@ services:
       - '8080:80'
     depends_on:
       - dbpostgres
-    command: npm start
+    command: npm run start:prod
+
 
